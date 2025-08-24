@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <style>
+    body { margin:0; font-family:sans-serif; }
+    .app-topbar {
+      padding: 20px;
+      text-align: center;
+      font-size: 22px;
+      background: #222;
+      color: white;
+      transition: background 0.3s, color 0.3s;
+    }
+    ul.colour-picker { padding: 0; margin: 30px auto; max-width: 600px; }
+    ul.colour-picker li {
+      list-style: none;
+      display: inline-block;
+      width: 40px; height: 40px; margin: 0 7px; border-radius: 50%;
+      border: 1px solid #aaa;
+      cursor: pointer;
+      vertical-align: middle;
+      transition: box-shadow 0.2s;
+    }
+
+    [data-colour="teal"]      { background: teal; }
+    [data-colour="green"]     { background: green; }
+    [data-colour="yellow"]    { background: gold; }
+    [data-colour="orange"]    { background: orange; }
+    [data-colour="red"]       { background: #e33; }
+    [data-colour="blue"]      { background: #2196f3; }
+    [data-colour="dark-blue"] { background: #223366; }
+    [data-colour="white"]     { background: white; border: 1px solid #d0d0d0; }
+    [data-colour="white"]::after { content: ""; display: block; height: 22px; }
+
+
+    ul.colour-picker li.active { box-shadow: 0 0 0 3px #888a; }
+  </style>
+</head>
+<body>
+
+<div class="app-page" data-page="home">
+  <div class="app-topbar"><h2>Select a Color</h2></div>
+  <div class="app-content">
+    <ul class="colour-picker">
+      <li data-colour="teal"></li>
+      <li data-colour="green"></li>
+      <li data-colour="yellow"></li>
+      <li data-colour="orange"></li>
+      <li data-colour="red"></li>
+      <li data-colour="blue"></li>
+      <li data-colour="dark-blue"></li>
+      <li data-colour="white"></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+const colourMap = {
+  "teal":      {bg:"teal",         color:"white"},
+  "green":     {bg:"green",        color:"white"},
+  "yellow":    {bg:"gold",         color:"#222"},
+  "orange":    {bg:"orange",       color:"white"},
+  "red":       {bg:"#e33",         color:"white"},
+  "blue":      {bg:"#2196f3",      color:"white"},
+  "dark-blue": {bg:"#223366",      color:"white"},
+  "white":     {bg:"white",        color:"#222"}
+};
+
+document.querySelectorAll('.colour-picker li').forEach(function(li){
+  li.addEventListener('click', function(){
+
+    document.querySelectorAll('.colour-picker li').forEach(function(el){
+      el.classList.remove('active');
+    });
+    li.classList.add('active');
+
+    // Get selected color
+    var colour = li.getAttribute('data-colour');
+    var topbar = document.querySelector('.app-topbar');
+
+
+    if(colourMap[colour]) {
+      topbar.style.background = colourMap[colour].bg;
+      topbar.style.color = colourMap[colour].color;
+    }
+  });
+});
+</script>
+
+</body>
+</html>
